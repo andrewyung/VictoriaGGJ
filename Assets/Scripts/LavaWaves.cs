@@ -28,6 +28,8 @@ public class LavaWaves : MonoBehaviour {
     private float nextUpdateTime;
 
     public float lavaMeshLowerBoundsOffset = 1.5f;
+    public float lavaIncreaseSpeed = 1;
+    public float lavaIncreaseAfterStart = 2.5f;
 
     public float surfaceWidth = 0.3f;
     public float meshOffsetSpeed = 0.1f;
@@ -77,10 +79,27 @@ public class LavaWaves : MonoBehaviour {
         lavaMeshLowerBoundY = lavaNodes[0].transform.localPosition.y - lavaMeshLowerBoundsOffset;
 
         generateLavaMesh();
+
+        StartCoroutine(moveUpwards());
 	}
+
+    IEnumerator moveUpwards()
+    {
+        float destY = transform.position.y + lavaIncreaseAfterStart;
+        while (transform.position.y < destY)
+        {
+            transform.position += new Vector3(0, lavaIncreaseSpeed * Time.deltaTime, 0);
+            yield return new WaitForEndOfFrame();
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        if (originalHeight != transform.position.y)
+        {
+            originalHeight = transform.position.y;
+        }
+
         if (Time.time > nextUpdateTime)
         {
             // update all nodes except first
