@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 0e979ee82809f8b4d8f8f0bc5923ea5e
-timeCreated: 1485029988
+guid: 46f19364d2f0b7641a9ca6ef369cb9dc
+timeCreated: 1485057112
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: walking (ffixed)_0
-    21300002: walking (ffixed)_1
-    21300004: walking (ffixed)_2
-    21300006: walking (ffixed)_3
-    21300008: walking (ffixed)_4
-    21300010: walking (ffixed)_5
+    21300000: walking_0
+    21300002: walking_1
+    21300004: walking_2
+    21300006: walking_3
+    21300008: walking_4
+    21300010: walking_5
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -76,7 +76,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: walking (ffixed)_0
+      name: walking_0
       rect:
         serializedVersion: 2
         x: 0
@@ -89,7 +89,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: walking (ffixed)_1
+      name: walking_1
       rect:
         serializedVersion: 2
         x: 50
@@ -102,7 +102,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: walking (ffixed)_2
+      name: walking_2
       rect:
         serializedVersion: 2
         x: 100
@@ -115,7 +115,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: walking (ffixed)_3
+      name: walking_3
       rect:
         serializedVersion: 2
         x: 150
@@ -128,7 +128,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: walking (ffixed)_4
+      name: walking_4
       rect:
         serializedVersion: 2
         x: 200
@@ -141,7 +141,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: walking (ffixed)_5
+      name: walking_5
       rect:
         serializedVersion: 2
         x: 250

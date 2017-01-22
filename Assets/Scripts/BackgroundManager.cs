@@ -35,8 +35,6 @@ public class BackgroundManager : MonoBehaviour {
         hellSR = hellBackgroundGO.GetComponent<SpriteRenderer>();
 
         currentState = BackgroundState.normal;
-
-        StartCoroutine(switchToBackground(BackgroundState.hell));
     }
 	
 	public static void switchBackground(BackgroundState bgState)

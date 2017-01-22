@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MagneticObject : MonoBehaviour {
+public class MagneticObjectt : MonoBehaviour {
 
     [SerializeField]
     private float forceAmount;
