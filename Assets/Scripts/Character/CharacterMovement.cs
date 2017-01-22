@@ -6,6 +6,7 @@ public class CharacterMovement : MonoBehaviour
     public float moveForce = 40;
     public float jumpForce;
     public float maxJumpVelocity;
+    public float maxMoveVelocity;
 
     private Rigidbody2D rigidBody;
     private Vector2 movementVector;
@@ -19,6 +20,7 @@ public class CharacterMovement : MonoBehaviour
 
     //player faces right by default
     private bool isFacingRight = true;
+    private bool isGrounded = false;
 
     private SpriteRenderer spriteRenderer;
     private Animator anim;
@@ -31,7 +33,7 @@ public class CharacterMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         movementVector = new Vector2();
         jumpState = JumpState.Ground;
-        jumpForce = rigidBody.mass * 200;
+        jumpForce = rigidBody.mass * 200 * jumpForce;
         maxJumpVelocity = rigidBody.mass * 150;
         //excitementJump();
     }
@@ -39,19 +41,23 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (groundedCheck())
+        {
+            jumpState = JumpState.Ground;
+        }
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            Debug.Log("left");
+            //Debug.Log("left");
             moveLeft();
         }
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-            Debug.Log("right");
+            //Debug.Log("right");
             moveRight();
         }
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            Debug.Log("jump");
+            //Debug.Log("jump");
             jump();
         }
 
@@ -59,6 +65,19 @@ public class CharacterMovement : MonoBehaviour
         {
             anim.SetBool("Walking", false);
         }
+    }
+
+    bool groundedCheck()
+    {
+        RaycastHit2D rch;
+        rch = Physics2D.Linecast(transform.position, transform.position - (transform.up * 1.1f), 1);
+        //Debug.DrawLine(transform.position, transform.position - (transform.up * 1.1f));
+
+        if (rch.collider != null)
+        {
+            return true;
+        }
+        return false;
     }
 
     void moveLeft()
@@ -71,6 +90,10 @@ public class CharacterMovement : MonoBehaviour
         {
             spriteRenderer.flipX = true;
             isFacingRight = false;
+        }
+        if (rigidBody.velocity.x < -maxMoveVelocity)
+        {
+            rigidBody.velocity = new Vector2(-maxMoveVelocity, rigidBody.velocity.y);
         }
 
         anim.SetBool("Walking", true);
@@ -87,6 +110,10 @@ public class CharacterMovement : MonoBehaviour
             spriteRenderer.flipX = false;
             isFacingRight = true;
         }
+        if (rigidBody.velocity.x > maxMoveVelocity)
+        {
+            rigidBody.velocity = new Vector2(maxMoveVelocity, rigidBody.velocity.y);
+        }
 
         anim.SetBool("Walking", true);
     }
@@ -94,7 +121,6 @@ public class CharacterMovement : MonoBehaviour
     void jump()
     {
         movementVector.Set(0, jumpForce);
-        Debug.Log(jumpState);
         switch (jumpState)
         {
             case JumpState.Ground:
@@ -112,7 +138,7 @@ public class CharacterMovement : MonoBehaviour
         if (rigidBody.velocity.y > maxJumpVelocity)
         {
             print("limiting velocity");
-            rigidBody.velocity.Set(rigidBody.velocity.x, maxJumpVelocity);
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, maxJumpVelocity);
         }
         //character stops walking motion when jumping
         anim.SetBool("Walking", false);
@@ -124,6 +150,7 @@ public class CharacterMovement : MonoBehaviour
         jump();
     }
 
+    /*
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (jumpState == JumpState.SingleJump || jumpState == JumpState.DoubleJump)
@@ -131,5 +158,5 @@ public class CharacterMovement : MonoBehaviour
             jumpState = JumpState.Ground;
         }
     }
-
+    */
 }

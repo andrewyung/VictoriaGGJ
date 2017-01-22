@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public GameObject ground;
+    public ItemShift itemShift;
 
     public GameObject firstStageObjects;
     public GameObject secondStageObjects;
@@ -32,6 +33,9 @@ public class GameManager : MonoBehaviour {
         gameManager.ground.transform.position = new Vector3(0, -2.46f, gameManager.ground.transform.position.z);
         gameManager.firstStageObjects.SetActive(false);
         gameManager.secondStageObjects.SetActive(true);
+
+        gameManager.itemShift.doShift();
+        PanelManager.hideText();
         //RoomScrolling.isScrolling = true;
     }
 
