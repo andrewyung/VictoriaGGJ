@@ -9,11 +9,25 @@ public class BackgroundManager : MonoBehaviour {
 
     public float alphaChangeRate = 1;
 
-    enum BackgroundState { normal, hell };
+    public enum BackgroundState { normal, hell };
     private BackgroundState currentState;
 
     private SpriteRenderer normalSR;
     private SpriteRenderer hellSR;
+
+    private static BackgroundManager backgroundManager;
+
+    void Awake()
+    {
+        if (backgroundManager == null)
+        {
+            backgroundManager = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -25,14 +39,13 @@ public class BackgroundManager : MonoBehaviour {
         StartCoroutine(switchToBackground(BackgroundState.hell));
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	public static void switchBackground(BackgroundState bgState)
+    {
+        backgroundManager.StartCoroutine(backgroundManager.switchToBackground(bgState));
+    }
 
     IEnumerator switchToBackground(BackgroundState bgState)
     {
-        Debug.Log("at");
         if (currentState != bgState)
         {
             switch(bgState)
@@ -68,6 +81,15 @@ public class BackgroundManager : MonoBehaviour {
                     }
                     break;
             }
+        }
+    }
+
+    IEnumerator propSpawning()
+    {
+        while (currentState == BackgroundState.hell)
+        {
+
+            yield return new WaitForEndOfFrame();
         }
     }
 }
