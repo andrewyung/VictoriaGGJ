@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+    public GameObject ground;
+
+    public GameObject firstStageObjects;
+    public GameObject secondStageObjects;
+
     private bool startedGame = true;
     private bool endedGame = true;
 
@@ -21,15 +26,18 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    void beginningShift()
+    public static void beginningShift()
     {
         BackgroundManager.switchBackground(BackgroundManager.BackgroundState.hell);
-        RoomScrolling.isScrolling = true;
+        gameManager.ground.transform.position = new Vector3(0, -2.46f, gameManager.ground.transform.position.z);
+        gameManager.firstStageObjects.SetActive(false);
+        gameManager.secondStageObjects.SetActive(true);
+        //RoomScrolling.isScrolling = true;
     }
 
-    void endingShift()
+    public static void endingShift()
     {
         BackgroundManager.switchBackground(BackgroundManager.BackgroundState.normal);
-        RoomScrolling.isScrolling = false;
+        //RoomScrolling.isScrolling = false;
     }
 }

@@ -4,25 +4,29 @@ using UnityEngine;
 
 public class RoomScrolling : MonoBehaviour {
     
-    public float scrollSpeed;
     public float roomLength;
 
     public static bool isScrolling = true;
 
     private Vector2 originPosition;
 
+    private float offset;
+    private int scrollMultiplier;
+
     void Start()
     {
         originPosition = transform.position;
-        originPosition.x -= roomLength / 2;
     }
 
-    void Update()
+    public void scroll(float amount)
     {
-        if (isScrolling)
+        offset += amount;
+        transform.position = new Vector2(originPosition.x + (scrollMultiplier * roomLength), transform.position.y);
+
+        if (offset > roomLength)
         {
-            float x = Mathf.Repeat(Time.time * scrollSpeed, roomLength);
-            transform.position = new Vector2(originPosition.x + x, transform.position.y);
+            scrollMultiplier++;
+            offset -= roomLength;
         }
     }
 }

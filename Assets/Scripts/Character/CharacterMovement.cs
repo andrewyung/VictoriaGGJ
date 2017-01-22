@@ -111,7 +111,7 @@ public class CharacterMovement : MonoBehaviour
         }
         if (rigidBody.velocity.y > maxJumpVelocity)
         {
-            Debug.Log ("limiting velocity");
+            print("limiting velocity");
             rigidBody.velocity.Set(rigidBody.velocity.x, maxJumpVelocity);
         }
         //character stops walking motion when jumping
