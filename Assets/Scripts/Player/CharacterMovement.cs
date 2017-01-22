@@ -4,16 +4,11 @@ using System.Collections;
 public class CharacterMovement : MonoBehaviour
 {
     public float moveForce = 40;
-    public float jumpForce;
-    public float maxJumpVelocity;
+    public float jumpForce = 10;
 
-    private Rigidbody2D rigidBody;
+    private Rigidbody2D rigidbody;
     private Vector2 movementVector;
-    private enum JumpState {
-        Ground,
-        SingleJump,
-        DoubleJump
-    };
+    private enum JumpState { Ground, SingleJump, DoubleJump };
     private JumpState jumpState;
 
     //player faces right by default
@@ -27,12 +22,10 @@ public class CharacterMovement : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        rigidBody = GetComponent<Rigidbody2D>();
+        rigidbody = GetComponent<Rigidbody2D>();
         movementVector = new Vector2();
         jumpState = JumpState.Ground;
-        jumpForce = rigidBody.mass * 200;
-        maxJumpVelocity = rigidBody.mass * 150;
-        //excitementJump();
+        excitementJump();
     }
 
     // Update is called once per frame
@@ -54,7 +47,7 @@ public class CharacterMovement : MonoBehaviour
             jump();
         }
 
-        if (rigidBody.velocity == Vector2.zero)
+        if (rigidbody.velocity == Vector2.zero)
         {
             anim.SetBool("Walking", false);
         }
@@ -63,7 +56,7 @@ public class CharacterMovement : MonoBehaviour
     void moveLeft()
     {
         movementVector.Set(-moveForce, 0);
-        rigidBody.AddForce(movementVector);
+        rigidbody.AddForce(movementVector);
 
         //orient player to the direction of movement
         if (isFacingRight)
@@ -78,7 +71,7 @@ public class CharacterMovement : MonoBehaviour
     void moveRight()
     {
         movementVector.Set(moveForce, 0);
-        rigidBody.AddForce(movementVector);
+        rigidbody.AddForce(movementVector);
 
         //orient player to the direction of movement
         if (!isFacingRight)
@@ -98,22 +91,17 @@ public class CharacterMovement : MonoBehaviour
         {
             case JumpState.Ground:
                 jumpState = JumpState.SingleJump;
-                rigidBody.AddForce(movementVector);
+                rigidbody.AddForce(movementVector);
                 break;
             case JumpState.SingleJump:
                 jumpState = JumpState.DoubleJump;
-                rigidBody.AddForce(movementVector);
+                rigidbody.AddForce(movementVector);
                 break;
             case JumpState.DoubleJump:
             default:
                 break;
         }
-        if (rigidBody.velocity.y > maxJumpVelocity)
-        {
-            print("limiting velocity");
-            rigidBody.velocity.Set (rigidBody.velocity.x, maxJumpVelocity);
-        }
-        //character stops walking motion when jumping
+
         anim.SetBool("Walking", false);
     }
 
